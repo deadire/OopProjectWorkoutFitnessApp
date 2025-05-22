@@ -1,33 +1,48 @@
 package gui;
 
+import model.Admin;
+
 import javax.swing.*;
 import java.awt.*;
-import model.Admin;
 
 public class LoginFrame extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    private Admin admin = new Admin("A001", "model.Admin", "admin", "admin123");
+    private Admin admin = new Admin("A001", "Admin", "admin", "admin123");
 
     public LoginFrame() {
-        setTitle("Workout Fitness App - model.Admin Login");
-        setSize(350, 200);
+        setTitle("🏋️‍♂️ Workout Fitness App - Admin Login");
+        setSize(400, 250);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(4, 2));
+        setLayout(new BorderLayout(10, 10));
 
-        add(new JLabel("Username:"));
+        JLabel title = new JLabel("Admin Login", SwingConstants.CENTER);
+        title.setFont(new Font("SansSerif", Font.BOLD, 20));
+        add(title, BorderLayout.NORTH);
+
+        JPanel form = new JPanel(new GridLayout(2, 2, 10, 10));
+        form.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+
+        form.add(new JLabel("Username:"));
         usernameField = new JTextField();
-        add(usernameField);
+        form.add(usernameField);
 
-        add(new JLabel("Password:"));
+        form.add(new JLabel("Password:"));
         passwordField = new JPasswordField();
-        add(passwordField);
+        form.add(passwordField);
+
+        add(form, BorderLayout.CENTER);
 
         JButton loginButton = new JButton("Login");
-        add(loginButton);
+        loginButton.setBackground(Color.BLUE);
+        loginButton.setForeground(Color.WHITE);
         loginButton.addActionListener(e -> handleLogin());
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(loginButton);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -38,10 +53,10 @@ public class LoginFrame extends JFrame {
 
         if (admin.getUsername().equals(username) && admin.checkPassword(password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
-            dispose(); // Close login window
-            new AdminDashboard(admin); // Open dashboard
+            dispose();
+            new AdminDashboard(admin);
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid credentials.");
+            JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -1,9 +1,10 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
 import model.Admin;
 import model.MembershipPlan;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class AdminDashboard extends JFrame {
@@ -11,35 +12,53 @@ public class AdminDashboard extends JFrame {
 
     public AdminDashboard(Admin admin) {
         this.admin = admin;
-        setTitle("model.Admin Dashboard");
-        setSize(400, 300);
+        setTitle("🏋️ Admin Dashboard");
+        setSize(500, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(0, 1, 10, 10));
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
-        JButton membersBtn = new JButton("Manage Members");
-        JButton trainersBtn = new JButton("Manage Trainers");
-        JButton plansBtn = new JButton("View Membership Plans");
+        JButton btnMembers = createStyledButton("👥 Manage Members");
+        JButton btnTrainers = createStyledButton("🧑‍🏫 Manage Trainers");
+        JButton btnPlans = createStyledButton("💳 View Membership Plans");
+        JButton btnLogout = createStyledButton("🚪 Logout");
 
-        membersBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Members panel coming soon..."));
-        trainersBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Trainers panel coming soon..."));
-        plansBtn.addActionListener(e -> showPlans());
+        btnMembers.addActionListener(e -> new MemberPanel(admin));
+        btnTrainers.addActionListener(e -> JOptionPane.showMessageDialog(this, "Trainer panel coming soon."));
+        btnPlans.addActionListener(e -> showPlans());
+        btnLogout.addActionListener(e -> {
+            dispose();
+            new LoginFrame();
+        });
 
-        panel.add(membersBtn);
-        panel.add(trainersBtn);
-        panel.add(plansBtn);
+        panel.add(btnMembers);
+        panel.add(btnTrainers);
+        panel.add(btnPlans);
+        panel.add(btnLogout);
 
         add(panel);
         setVisible(true);
     }
 
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFocusPainted(false);
+        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        button.setBackground(new Color(60, 120, 240));
+        button.setForeground(Color.WHITE);
+        return button;
+    }
+
     private void showPlans() {
-        StringBuilder sb = new StringBuilder("Membership Plans:\n");
-        for (MembershipPlan plan : MembershipPlan.loadFromFile("plans.txt")) {
-            sb.append("- ").append(plan.getPlanName()).append(": $")
+        List<MembershipPlan> plans = MembershipPlan.loadFromFile("plans.txt");
+        StringBuilder sb = new StringBuilder("Membership Plans:\n\n");
+        for (MembershipPlan plan : plans) {
+            sb.append(plan.getPlanName()).append(" - $")
                     .append(plan.getMonthlyFee()).append("\n");
         }
-        JOptionPane.showMessageDialog(this, sb.toString());
+        JOptionPane.showMessageDialog(this, sb.toString(), "Plans", JOptionPane.INFORMATION_MESSAGE);
     }
 }
