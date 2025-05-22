@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 
 public class Payment {
@@ -50,8 +52,8 @@ public class Payment {
 
     // Display payment info
     public void displayPayment() {
-        System.out.println("Payment ID: " + paymentId);
-        System.out.println("Member ID: " + memberId);
+        System.out.println("model.Payment ID: " + paymentId);
+        System.out.println("model.Member ID: " + memberId);
         System.out.println("Amount: $" + amount);
         System.out.println("Date: " + paymentDate);
         System.out.println("Method: " + paymentMethod);

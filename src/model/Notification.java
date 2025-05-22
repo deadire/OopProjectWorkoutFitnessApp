@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 
 public class Notification {
@@ -40,7 +42,7 @@ public class Notification {
 
     // Display notification details
     public void displayNotification() {
-        System.out.println("Notification ID: " + notificationId);
+        System.out.println("model.Notification ID: " + notificationId);
         System.out.println("Recipient ID: " + recipientId);
         System.out.println("Date: " + date);
         System.out.println("Message: " + message);

@@ -1,3 +1,5 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,7 @@ public class Member extends User {
 
     @Override
     public void displayInfo() {
-        System.out.println("Member Name: " + name);
+        System.out.println("model.Member Name: " + name);
         System.out.println("ID: " + id);
         System.out.println("Age: " + age);
         System.out.println("Weight: " + weight + " kg");
@@ -88,7 +90,7 @@ public class Member extends User {
             writer.write(id + "," + name + "," + age + "," + weight + "," + height + "," + goal + "," +
                 (membershipPlan != null ? membershipPlan.getPlanId() : "null"));
             writer.newLine();
-            System.out.println("Member saved to file.");
+            System.out.println("model.Member saved to file.");
         } catch (IOException e) {
             System.out.println("Error saving member: " + e.getMessage());
         }

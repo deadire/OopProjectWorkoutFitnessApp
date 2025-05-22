@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class WorkoutSchedule {
 
     // Display all sessions
     public void displaySchedule() {
-        System.out.println("Workout Schedule for Member ID: " + memberId);
+        System.out.println("Workout Schedule for model.Member ID: " + memberId);
         for (WorkoutSession session : sessions) {
             session.displaySession();
             System.out.println("----------------------");

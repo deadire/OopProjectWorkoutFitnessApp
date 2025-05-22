@@ -1,3 +1,5 @@
+package model;
+
 public class WorkoutPlan {
     private String planName;
     private Exercise[] exercises;

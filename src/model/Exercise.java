@@ -1,3 +1,5 @@
+package model;
+
 public class Exercise {
     private String name;
     private String muscleGroup;
@@ -48,7 +50,7 @@ public class Exercise {
 
     // Display exercise details
     public void displayExercise() {
-        System.out.println("Exercise: " + name);
+        System.out.println("model.Exercise: " + name);
         System.out.println("Muscle Group: " + muscleGroup);
         System.out.println("Sets: " + sets);
         System.out.println("Reps: " + reps);

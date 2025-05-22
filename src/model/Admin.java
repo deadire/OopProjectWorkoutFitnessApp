@@ -1,3 +1,5 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +33,15 @@ public class Admin extends User {
     }
     
 
-    // ==== Member Management ====
+    // ==== model.Member Management ====
     public void addMember(Member member) {
         members.add(member);
-        System.out.println("Member added: " + member.getName());
+        System.out.println("model.Member added: " + member.getName());
     }
 
     public void removeMember(String memberId) {
         members.removeIf(m -> m.getId().equals(memberId));
-        System.out.println("Member with ID " + memberId + " removed.");
+        System.out.println("model.Member with ID " + memberId + " removed.");
     }
 
     public Member getMemberById(String memberId) {
@@ -58,15 +60,15 @@ public class Admin extends User {
         }
     }
 
-    // ==== Trainer Management ====
+    // ==== model.Trainer Management ====
     public void addTrainer(Trainer trainer) {
         trainers.add(trainer);
-        System.out.println("Trainer added: " + trainer.getName());
+        System.out.println("model.Trainer added: " + trainer.getName());
     }
 
     public void removeTrainer(String trainerId) {
         trainers.removeIf(t -> t.getId().equals(trainerId));
-        System.out.println("Trainer with ID " + trainerId + " removed.");
+        System.out.println("model.Trainer with ID " + trainerId + " removed.");
     }
 
     public Trainer getTrainerById(String trainerId) {
@@ -87,7 +89,7 @@ public class Admin extends User {
 
     @Override
     public void displayInfo() {
-        System.out.println("Admin Name: " + name);
+        System.out.println("model.Admin Name: " + name);
         System.out.println("Username: " + username);
     }
 
@@ -97,7 +99,7 @@ public class Admin extends User {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(id + "," + name + "," + username + "," + password);
             writer.newLine();
-            System.out.println("Admin saved to file.");
+            System.out.println("model.Admin saved to file.");
         } catch (IOException e) {
             System.out.println("Error saving admin: " + e.getMessage());
         }

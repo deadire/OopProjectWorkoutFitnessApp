@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Duration;
@@ -53,7 +55,7 @@ public class AttendanceRecord {
     // Display attendance details
     public void displayAttendance() {
         System.out.println("Record ID: " + recordId);
-        System.out.println("Member ID: " + memberId);
+        System.out.println("model.Member ID: " + memberId);
         System.out.println("Date: " + date);
         System.out.println("Check-in Time: " + checkInTime);
         System.out.println("Check-out Time: " + checkOutTime);

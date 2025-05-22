@@ -1,3 +1,5 @@
+package model;
+
 public class FitnessGoal {
     private String goalId;
     private String memberId;

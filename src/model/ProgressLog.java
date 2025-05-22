@@ -1,3 +1,5 @@
+package model;
+
 public class ProgressLog {
     private String date;
     private double weight;

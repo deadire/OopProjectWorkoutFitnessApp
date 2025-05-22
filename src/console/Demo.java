@@ -1,7 +1,9 @@
+package console;
+
+import model.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +24,7 @@ public class Demo {
         membershipPlans.add(new MembershipPlan("P003", "Annual", 499.99, 12, "Year-long access with all benefits", true));
 
         // Create admin account
-        admin = new Admin("A001", "Admin User", "admin", "admin123");
+        admin = new Admin("A001", "model.Admin model.User", "admin", "admin123");
         
         // Load initial data from files if they exist
         loadInitialData();
@@ -39,7 +41,7 @@ public class Demo {
     private static void showMainMenu() {
         while (true) {
             System.out.println("\n=== Gym Management System ===");
-            System.out.println("1. Admin Login");
+            System.out.println("1. model.Admin Login");
             System.out.println("2. Exit");
             System.out.print("Select option: ");
             
@@ -61,7 +63,7 @@ public class Demo {
     }
 
     private static void adminLogin() {
-        System.out.println("\n=== Admin Login ===");
+        System.out.println("\n=== model.Admin Login ===");
         System.out.print("Username: ");
         String username = scanner.nextLine();
         System.out.print("Password: ");
@@ -77,7 +79,7 @@ public class Demo {
 
     private static void showAdminMenu() {
         while (true) {
-            System.out.println("\n=== Admin Dashboard ===");
+            System.out.println("\n=== model.Admin Dashboard ===");
             System.out.println("1. Manage Members");
             System.out.println("2. Manage Trainers");
             System.out.println("3. View Membership Plans");
@@ -116,12 +118,12 @@ public class Demo {
 
     private static void manageMembers() {
         while (true) {
-            System.out.println("\n=== Member Management ===");
-            System.out.println("1. Add New Member");
+            System.out.println("\n=== model.Member Management ===");
+            System.out.println("1. Add New model.Member");
             System.out.println("2. View All Members");
-            System.out.println("3. Find Member by ID");
-            System.out.println("4. Remove Member");
-            System.out.println("5. Back to Admin Menu");
+            System.out.println("3. Find model.Member by ID");
+            System.out.println("4. Remove model.Member");
+            System.out.println("5. Back to model.Admin Menu");
             System.out.print("Select option: ");
             
             int choice = scanner.nextInt();
@@ -149,8 +151,8 @@ public class Demo {
     }
 
     private static void addNewMember() {
-        System.out.println("\n=== Add New Member ===");
-        System.out.print("Member ID: ");
+        System.out.println("\n=== Add New model.Member ===");
+        System.out.print("model.Member ID: ");
         String id = scanner.nextLine();
         System.out.print("Name: ");
         String name = scanner.nextLine();
@@ -179,11 +181,11 @@ public class Demo {
         
         Member newMember = new Member(id, name, age, weight, height, goal, selectedPlan);
         admin.addMember(newMember);
-        System.out.println("Member added successfully!");
+        System.out.println("model.Member added successfully!");
     }
 
     private static void findMemberById() {
-        System.out.print("\nEnter Member ID: ");
+        System.out.print("\nEnter model.Member ID: ");
         String id = scanner.nextLine();
         Member member = admin.getMemberById(id);
         
@@ -191,16 +193,16 @@ public class Demo {
             member.displayInfo();
             showMemberOptions(member);
         } else {
-            System.out.println("Member not found.");
+            System.out.println("model.Member not found.");
         }
     }
 
     private static void showMemberOptions(Member member) {
-        System.out.println("\nMember Options:");
+        System.out.println("\nmodel.Member Options:");
         System.out.println("1. Record Attendance");
         System.out.println("2. Create Workout Plan");
         System.out.println("3. View Progress");
-        System.out.println("4. Back to Member Management");
+        System.out.println("4. Back to model.Member Management");
         System.out.print("Select option: ");
         
         int choice = scanner.nextInt();
@@ -261,8 +263,8 @@ public class Demo {
         boolean addingExercises = true;
         
         while (addingExercises) {
-            System.out.println("\nAdd Exercise:");
-            System.out.print("Exercise Name: ");
+            System.out.println("\nAdd model.Exercise:");
+            System.out.print("model.Exercise Name: ");
             String name = scanner.nextLine();
             System.out.print("Muscle Group: ");
             String muscleGroup = scanner.nextLine();
@@ -286,8 +288,8 @@ public class Demo {
     }
 
     private static void viewMemberProgress(Member member) {
-        System.out.println("\n=== Member Progress ===");
-        System.out.println("Member: " + member.getName());
+        System.out.println("\n=== model.Member Progress ===");
+        System.out.println("model.Member: " + member.getName());
         System.out.println("Current Weight: " + member.getWeight() + " kg");
         System.out.println("Height: " + member.getHeight() + " cm");
         
@@ -305,19 +307,19 @@ public class Demo {
     }
 
     private static void removeMember() {
-        System.out.print("\nEnter Member ID to remove: ");
+        System.out.print("\nEnter model.Member ID to remove: ");
         String id = scanner.nextLine();
         admin.removeMember(id);
     }
 
     private static void manageTrainers() {
         while (true) {
-            System.out.println("\n=== Trainer Management ===");
-            System.out.println("1. Add New Trainer");
+            System.out.println("\n=== model.Trainer Management ===");
+            System.out.println("1. Add New model.Trainer");
             System.out.println("2. View All Trainers");
-            System.out.println("3. Find Trainer by ID");
-            System.out.println("4. Remove Trainer");
-            System.out.println("5. Back to Admin Menu");
+            System.out.println("3. Find model.Trainer by ID");
+            System.out.println("4. Remove model.Trainer");
+            System.out.println("5. Back to model.Admin Menu");
             System.out.print("Select option: ");
             
             int choice = scanner.nextInt();
@@ -345,8 +347,8 @@ public class Demo {
     }
 
     private static void addNewTrainer() {
-        System.out.println("\n=== Add New Trainer ===");
-        System.out.print("Trainer ID: ");
+        System.out.println("\n=== Add New model.Trainer ===");
+        System.out.print("model.Trainer ID: ");
         String id = scanner.nextLine();
         System.out.print("Name: ");
         String name = scanner.nextLine();
@@ -355,23 +357,23 @@ public class Demo {
         
         Trainer newTrainer = new Trainer(id, name, specialty);
         admin.addTrainer(newTrainer);
-        System.out.println("Trainer added successfully!");
+        System.out.println("model.Trainer added successfully!");
     }
 
     private static void findTrainerById() {
-        System.out.print("\nEnter Trainer ID: ");
+        System.out.print("\nEnter model.Trainer ID: ");
         String id = scanner.nextLine();
         Trainer trainer = admin.getTrainerById(id);
         
         if (trainer != null) {
             trainer.displayInfo();
         } else {
-            System.out.println("Trainer not found.");
+            System.out.println("model.Trainer not found.");
         }
     }
 
     private static void removeTrainer() {
-        System.out.print("\nEnter Trainer ID to remove: ");
+        System.out.print("\nEnter model.Trainer ID to remove: ");
         String id = scanner.nextLine();
         admin.removeTrainer(id);
     }
@@ -386,10 +388,10 @@ public class Demo {
 
     private static void generateReports() {
         System.out.println("\n=== Reports ===");
-        System.out.println("1. Member List");
-        System.out.println("2. Trainer List");
+        System.out.println("1. model.Member List");
+        System.out.println("2. model.Trainer List");
         System.out.println("3. Membership Statistics");
-        System.out.println("4. Back to Admin Menu");
+        System.out.println("4. Back to model.Admin Menu");
         System.out.print("Select report: ");
         
         int choice = scanner.nextInt();
@@ -397,11 +399,11 @@ public class Demo {
         
         switch (choice) {
             case 1:
-                System.out.println("\n=== Member List Report ===");
+                System.out.println("\n=== model.Member List Report ===");
                 admin.listMembers();
                 break;
             case 2:
-                System.out.println("\n=== Trainer List Report ===");
+                System.out.println("\n=== model.Trainer List Report ===");
                 admin.listTrainers();
                 break;
             case 3:

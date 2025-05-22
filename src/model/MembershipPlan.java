@@ -1,3 +1,5 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class MembershipPlan {
         System.out.println("Monthly Fee: $" + monthlyFee);
         System.out.println("Duration: " + durationMonths + " months");
         System.out.println("Description: " + description);
-        System.out.println("Includes Trainer: " + (includesTrainer ? "Yes" : "No"));
+        System.out.println("Includes model.Trainer: " + (includesTrainer ? "Yes" : "No"));
     }
 
     // Escape commas to avoid split errors when saving/loading

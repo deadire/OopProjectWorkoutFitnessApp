@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 
 public class Feedback {
@@ -40,8 +42,8 @@ public class Feedback {
 
     // Display feedback info
     public void displayFeedback() {
-        System.out.println("Feedback ID: " + feedbackId);
-        System.out.println("Member ID: " + memberId);
+        System.out.println("model.Feedback ID: " + feedbackId);
+        System.out.println("model.Member ID: " + memberId);
         System.out.println("Date: " + date);
         System.out.println("Content: " + content);
     }

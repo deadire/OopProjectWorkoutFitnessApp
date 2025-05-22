@@ -1,3 +1,5 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class Trainer extends User {
 
     @Override
     public void displayInfo() {
-        System.out.println("Trainer Name: " + name);
+        System.out.println("model.Trainer Name: " + name);
         System.out.println("ID: " + id);
         System.out.println("Specialty: " + specialty);
     }
@@ -32,7 +34,7 @@ public class Trainer extends User {
             // Format: id,name,specialty
             writer.write(id + "," + name + "," + specialty);
             writer.newLine();
-            System.out.println("Trainer saved to file.");
+            System.out.println("model.Trainer saved to file.");
         } catch (IOException e) {
             System.out.println("Error saving trainer: " + e.getMessage());
         }

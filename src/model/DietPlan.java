@@ -1,3 +1,5 @@
+package model;
+
 import java.util.List;
 public class DietPlan {
     private String planId;
