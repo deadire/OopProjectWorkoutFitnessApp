@@ -43,19 +43,42 @@ public class Trainer extends User {
     // Load all trainers from file
     public static List<Trainer> loadFromFile(String filename) {
         List<Trainer> trainers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        File file = new File(filename);
+
+        // ✅ Create file if it doesn't exist
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println("Created missing file: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.out.println("Unable to create " + filename + ": " + e.getMessage());
+            }
+            return trainers;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3) {
-                    Trainer trainer = new Trainer(parts[0], parts[1], parts[2]);
+                Trainer trainer = Trainer.fromFileString(line); // assumes this method exists
+                if (trainer != null) {
                     trainers.add(trainer);
                 }
             }
-            System.out.println("Trainers loaded from file.");
         } catch (IOException e) {
             System.out.println("Error loading trainers: " + e.getMessage());
         }
+
         return trainers;
     }
+    public static Trainer fromFileString(String line) {
+        String[] parts = line.split(",");
+        if (parts.length >= 3) {
+            String id = parts[0];
+            String name = parts[1];
+            String specialty = parts[2];
+            return new Trainer(id, name, specialty);
+        }
+        return null;
+    }
+
 }

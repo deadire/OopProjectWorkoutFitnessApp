@@ -25,7 +25,10 @@ public class Member extends User {
         this.goal = goal;
         this.membershipPlan = membershipPlan;
     }
-
+    public String toFileString() {
+        return id + "," + name + "," + age + "," + weight + "," + height + "," + goal + "," +
+                (membershipPlan != null ? membershipPlan.getPlanId() : "none");
+    }
     // Getters and Setters
     public int getAge() {
         return age;
@@ -99,12 +102,26 @@ public class Member extends User {
     // Load members from file and link membership plans from a list
     public static List<Member> loadFromFile(String filename, List<MembershipPlan> plans) {
         List<Member> members = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        File file = new File(filename);
+
+        // ✅ Auto-create file if it doesn't exist
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println("Created missing file: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.out.println("Unable to create file: " + filename + " - " + e.getMessage());
+                return members;
+            }
+            return members; // File just created, so return empty list
+        }
+
+        // ✅ Now read the file safely
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 7) {
-                    // Find membership plan by planId or null
                     MembershipPlan plan = null;
                     String planId = parts[6];
                     if (!planId.equals("null")) {
@@ -117,21 +134,23 @@ public class Member extends User {
                     }
 
                     Member member = new Member(
-                        parts[0],                      // id
-                        parts[1],                      // name
-                        Integer.parseInt(parts[2]),    // age
-                        Double.parseDouble(parts[3]),  // weight
-                        Double.parseDouble(parts[4]),  // height
-                        parts[5],                      // goal
-                        plan                          // membership plan or null
+                            parts[0],
+                            parts[1],
+                            Integer.parseInt(parts[2]),
+                            Double.parseDouble(parts[3]),
+                            Double.parseDouble(parts[4]),
+                            parts[5],
+                            plan
                     );
                     members.add(member);
                 }
             }
-            System.out.println("Members loaded from file.");
+            System.out.println("Members loaded from: " + file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Error loading members: " + e.getMessage());
         }
+
         return members;
     }
+
 }

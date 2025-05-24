@@ -50,22 +50,40 @@ public class MembershipPlan {
             System.out.println("Error saving membership plan: " + e.getMessage());
         }
     }
+    public static MembershipPlan fromFileString(String line) {
+        String[] parts = line.split(",");
+        if (parts.length >= 5) {
+            String id = parts[0];
+            String name = parts[1];
+            double fee = Double.parseDouble(parts[2]);
+            int duration = Integer.parseInt(parts[3]);
+            String benefits = parts[4];
+            boolean personalTraining = parts.length >= 6 && Boolean.parseBoolean(parts[5]);
+
+            return new MembershipPlan(id, name, fee, duration, benefits, personalTraining);
+        }
+        return null;
+    }
 
     public static List<MembershipPlan> loadFromFile(String filename) {
         List<MembershipPlan> plans = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println("Created missing file: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.out.println("Unable to create file: " + filename);
+                return plans;
+            }
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 6) {
-                    MembershipPlan plan = new MembershipPlan(
-                        parts[0],                      // planId
-                        parts[1],                      // planName
-                        Double.parseDouble(parts[2]),  // monthlyFee
-                        Integer.parseInt(parts[3]),    // durationMonths
-                        parts[4].replace("<comma>", ","), // description
-                        Boolean.parseBoolean(parts[5]) // includesTrainer
-                    );
+                MembershipPlan plan = MembershipPlan.fromFileString(line);
+                if (plan != null) {
                     plans.add(plan);
                 }
             }
@@ -73,8 +91,10 @@ public class MembershipPlan {
         } catch (IOException e) {
             System.out.println("Error loading membership plans: " + e.getMessage());
         }
+
         return plans;
     }
+
 
     // Getters and setters if you want (optional)
     public String getPlanId() {

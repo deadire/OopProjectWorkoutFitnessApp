@@ -31,7 +31,6 @@ public class Admin extends User {
     public List<Member> getMembers() {
         return members;
     }
-    
 
     // ==== model.Member Management ====
     public void addMember(Member member) {
@@ -96,7 +95,7 @@ public class Admin extends User {
     // ==== FILE HANDLING ====
 
     public void saveToFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/" + filename, true))) {
             writer.write(id + "," + name + "," + username + "," + password);
             writer.newLine();
             System.out.println("model.Admin saved to file.");
@@ -105,49 +104,76 @@ public class Admin extends User {
         }
     }
 
-    public static List<Admin> loadFromFile(String filename) {
-        List<Admin> admins = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    public static List<MembershipPlan> loadFromFile(String filename) {
+        List<MembershipPlan> plans = new ArrayList<>();
+        File file = new File("data/" + filename);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println("Created missing file: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.out.println("Unable to create " + filename);
+            }
+            return plans; // return empty list
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    Admin admin = new Admin(parts[0], parts[1], parts[2], parts[3]) {
-                        @Override
-                        public void displayInfo() {
-                            super.displayInfo();
-                        }
-                    };
-                    admins.add(admin);
-                }
+                plans.add(MembershipPlan.fromFileString(line));
             }
-            System.out.println("Admins loaded from file.");
         } catch (IOException e) {
-            System.out.println("Error loading admins: " + e.getMessage());
+            System.out.println("Error loading membership plans: " + e.getMessage());
         }
-        return admins;
+        return plans;
     }
 
+    // Save all members (overwrite mode)
     public void saveMembersToFile(String filename) {
-        for (Member m : members) {
-            m.saveToFile(filename);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/" + filename))) {
+            for (Member m : members) {
+                writer.write(m.toFileString());
+                writer.newLine();
+            }
+            System.out.println("Members saved to: " + new File("data/" + filename).getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Error saving members: " + e.getMessage());
+        }
+    }
+
+    // Append only a single new member
+    public void saveNewMemberToFile(String filename, Member member) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/" + filename, true))) {
+            writer.write(member.toFileString());
+            writer.newLine();
+            System.out.println("New member appended to: " + new File("data/" + filename).getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Error saving new member: " + e.getMessage());
         }
     }
 
     public void loadMembersFromFile(String filename) {
         List<MembershipPlan> plans = MembershipPlan.loadFromFile("plans.txt");
-        this.members = Member.loadFromFile("members.txt", plans);
-
-
+        this.members = Member.loadFromFile("data/" + filename, plans);
+        System.out.println("Members loaded from: " + new File("data/" + filename).getAbsolutePath());
     }
 
     public void saveTrainersToFile(String filename) {
         for (Trainer t : trainers) {
-            t.saveToFile(filename);
+            t.saveToFile("data/" + filename);
         }
     }
 
     public void loadTrainersFromFile(String filename) {
-        this.trainers = Trainer.loadFromFile(filename);
+        this.trainers = Trainer.loadFromFile("data/" + filename);
+    }
+
+    public static Admin fromFileString(String line) {
+        String[] parts = line.split(",");
+        if (parts.length >= 4) {
+            return new Admin(parts[0], parts[1], parts[2], parts[3]);
+        }
+        return null;
     }
 }

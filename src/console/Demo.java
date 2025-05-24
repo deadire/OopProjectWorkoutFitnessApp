@@ -3,9 +3,6 @@ package console;
 import model.Admin;
 import model.MembershipPlan;
 import java.util.*; // For List, Scanner, etc.
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Demo {
     private static Admin admin;
